@@ -3,7 +3,7 @@
   "packages": {
     "specifiers": {
       "jsr:@std/assert@^0.225.3": "jsr:@std/assert@0.225.3",
-      "jsr:@std/encoding@^0.224.3": "jsr:@std/encoding@0.224.3",
+      "jsr:@std/encoding@^1.0.1": "jsr:@std/encoding@1.0.1",
       "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.0"
     },
     "jsr": {
@@ -13,8 +13,8 @@
           "jsr:@std/internal@^1.0.0"
         ]
       },
-      "@std/encoding@0.224.3": {
-        "integrity": "5e861b6d81be5359fad4155e591acf17c0207b595112d1840998bb9f476dbdaf"
+      "@std/encoding@1.0.1": {
+        "integrity": "5955c6c542ebb4ce6587c3b548dc71e07a6c27614f1976d1d3887b1196cf4e65"
       },
       "@std/internal@1.0.0": {
         "integrity": "ac6a6dfebf838582c4b4f61a6907374e27e05bedb6ce276e0f1608fe84e7cd9a"
@@ -25,7 +25,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@^0.225.3",
-      "jsr:@std/encoding@^0.224.3"
+      "jsr:@std/encoding@^1.0.1"
     ]
   }
 }

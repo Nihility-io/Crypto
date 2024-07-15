@@ -61,7 +61,7 @@ export const encrypt = async (
 		throw new Error("invalid key length for AES256-GCM")
 	}
 
-	const iv = randomBytes(16)
+	const iv = randomBytes(12)
 	const salt = randomBytes(8)
 
 	const k = await deriveAESKey(key, password, salt)
