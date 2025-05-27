@@ -79,7 +79,7 @@ async function deriveKeyPBKDF2(passphrase: string, cryptoURL: CryptoURL): Promis
  * @returns Derived key
  */
 function deriveKeyScrypt(passphrase: string, cryptoURL: CryptoURL): Promise<Uint8Array> {
-	return scryptAsync(toBytes(passphrase), cryptoURL.getBase58("salt", randomBytes(8)), {
+	return scryptAsync(toBytes(passphrase), cryptoURL.getBase58("salt", randomBytes(config.Scrypt.saltLength)), {
 		N: cryptoURL.getNumber("n", config.Scrypt.N), // Cost factor
 		r: cryptoURL.getNumber("r", config.Scrypt.r), // Block size
 		p: cryptoURL.getNumber("p", config.Scrypt.p), // Parallelization
