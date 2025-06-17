@@ -14,7 +14,7 @@ import {
  * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
  * @returns Decrypted data string
  */
-export async function decrypt(passphrase: string, cryptoURL: string): Promise<string> {
+export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string): Promise<string> {
 	const c = new CryptoURL(cryptoURL)
 
 	switch (c.algorithm) {
@@ -33,7 +33,7 @@ export async function decrypt(passphrase: string, cryptoURL: string): Promise<st
  * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
  * @returns Decrypted data string
  */
-async function decryptAES256GCM(passphrase: string, cryptoURL: CryptoURL): Promise<Uint8Array> {
+async function decryptAES256GCM(passphrase: string | Uint8Array, cryptoURL: CryptoURL): Promise<Uint8Array> {
 	const iv = cryptoURL.getBase58("nonce")
 	const k = await deriveKey(passphrase, cryptoURL)
 
@@ -51,7 +51,7 @@ async function decryptAES256GCM(passphrase: string, cryptoURL: CryptoURL): Promi
  * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
  * @returns Decrypted data string
  */
-async function decryptXChaCha20Poly1305(passphrase: string, cryptoURL: CryptoURL): Promise<Uint8Array> {
+async function decryptXChaCha20Poly1305(passphrase: string | Uint8Array, cryptoURL: CryptoURL): Promise<Uint8Array> {
 	const iv = cryptoURL.getBase58("nonce")
 	const k = await deriveKey(passphrase, cryptoURL)
 

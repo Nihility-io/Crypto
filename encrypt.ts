@@ -18,7 +18,7 @@ import { CryptoURL } from "./parameters.ts"
  * @returns Encrypted data
  */
 export function encrypt(
-	passphrase: string,
+	passphrase: string | Uint8Array,
 	message: string,
 	algorithm = EncryptionAlgorithm.AES256GCM,
 ): Promise<string> {
@@ -39,7 +39,7 @@ export function encrypt(
  * @param data Data to encrypt
  * @returns Encrypted data
  */
-async function encryptAES256GCM(passphrase: string, data: Uint8Array): Promise<string> {
+async function encryptAES256GCM(passphrase: string | Uint8Array, data: Uint8Array): Promise<string> {
 	const cryptoURL = new CryptoURL(EncryptionAlgorithm.AES256GCM, KeyAlgorithm.PBKDF2)
 	const iv = cryptoURL.setBase58("nonce", randomBytes(12))
 	const k = await deriveKey(passphrase, cryptoURL)
@@ -59,7 +59,7 @@ async function encryptAES256GCM(passphrase: string, data: Uint8Array): Promise<s
  * @param data Data to encrypt
  * @returns Encrypted data
  */
-async function encryptXChaCha20Poly1305(passphrase: string, data: Uint8Array): Promise<string> {
+async function encryptXChaCha20Poly1305(passphrase: string | Uint8Array, data: Uint8Array): Promise<string> {
 	const cryptoURL = new CryptoURL(EncryptionAlgorithm.XChaCha20Poly1305, KeyAlgorithm.Scrypt)
 	const nonce = cryptoURL.setBase58("nonce", randomBytes(xchacha20poly1305.nonceLength))
 	const k = await deriveKey(passphrase, cryptoURL)

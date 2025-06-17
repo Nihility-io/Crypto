@@ -27,7 +27,7 @@ export function combineBaseKeyWithPassword(baseKey: Uint8Array, password: string
  * @param cryptoURL Crypto parameters containing the key algorithm and other settings
  * @returns Derived key
  */
-export function deriveKey(passphrase: string, cryptoURL: CryptoURL): Promise<CryptoKey | Uint8Array> {
+export function deriveKey(passphrase: string | Uint8Array, cryptoURL: CryptoURL): Promise<CryptoKey | Uint8Array> {
 	switch (cryptoURL.keyAlgorithm) {
 		case KeyAlgorithm.PBKDF2:
 			return deriveKeyPBKDF2(passphrase, cryptoURL)
@@ -44,11 +44,11 @@ export function deriveKey(passphrase: string, cryptoURL: CryptoURL): Promise<Cry
  * @param cryptoURL Crypto parameters containing the key algorithm and other settings
  * @returns Derived key
  */
-async function deriveKeyPBKDF2(passphrase: string, cryptoURL: CryptoURL): Promise<CryptoKey> {
+async function deriveKeyPBKDF2(passphrase: string | Uint8Array, cryptoURL: CryptoURL): Promise<CryptoKey> {
 	// Import raw key
 	const importedKey = await globalThis.crypto.subtle.importKey(
 		"raw", // Only 'raw' is allowed
-		toBytes(passphrase), // Encryption key
+		typeof passphrase === "string" ? toBytes(passphrase) : passphrase, // Encryption key
 		{ name: "PBKDF2" }, // Use PBKDF2 for key derivation
 		false, // The key may not be exported
 		["deriveKey"], // We may only use it for key derivation
@@ -78,11 +78,15 @@ async function deriveKeyPBKDF2(passphrase: string, cryptoURL: CryptoURL): Promis
  * @param cryptoURL Crypto parameters containing the key algorithm and other settings
  * @returns Derived key
  */
-function deriveKeyScrypt(passphrase: string, cryptoURL: CryptoURL): Promise<Uint8Array> {
-	return scryptAsync(toBytes(passphrase), cryptoURL.getBase58("salt", randomBytes(config.Scrypt.saltLength)), {
-		N: cryptoURL.getNumber("n", config.Scrypt.N), // Cost factor
-		r: cryptoURL.getNumber("r", config.Scrypt.r), // Block size
-		p: cryptoURL.getNumber("p", config.Scrypt.p), // Parallelization
-		dkLen: 32, // Key length
-	})
+function deriveKeyScrypt(passphrase: string | Uint8Array, cryptoURL: CryptoURL): Promise<Uint8Array> {
+	return scryptAsync(
+		typeof passphrase === "string" ? toBytes(passphrase) : passphrase,
+		cryptoURL.getBase58("salt", randomBytes(config.Scrypt.saltLength)),
+		{
+			N: cryptoURL.getNumber("n", config.Scrypt.N), // Cost factor
+			r: cryptoURL.getNumber("r", config.Scrypt.r), // Block size
+			p: cryptoURL.getNumber("p", config.Scrypt.p), // Parallelization
+			dkLen: 32, // Key length
+		},
+	)
 }
