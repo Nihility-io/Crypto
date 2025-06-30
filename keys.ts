@@ -1,4 +1,4 @@
-import { scryptAsync } from "@noble/hashes/scrypt"
+import { scryptAsync } from "@noble/hashes/scrypt.js"
 import { config } from "./config.ts"
 import { CryptoURL, KeyAlgorithm, randomBytes, toBytes, UnsupportedKeyAlgorithmError } from "./mod.ts"
 
