@@ -32,3 +32,11 @@ export function toBytes(s: string): Uint8Array {
 export function fromBytes(b: Uint8Array): string {
 	return new TextDecoder().decode(b)
 }
+/**
+ * Generates a random integer in the range [0, max)
+ * @param max Maximum value (exclusive)
+ * @returns Random integer
+ */
+export function randomInt(max: number): number {
+	return crypto.getRandomValues(new Uint32Array(1))[0] % max
+}
