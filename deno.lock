@@ -1,18 +1,18 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@noble/ciphers@^2.0.0-beta.4": "2.0.0-beta.4",
-    "jsr:@noble/hashes@^2.0.0-beta.5": "2.0.0-beta.5",
+    "jsr:@noble/ciphers@2": "2.0.0",
+    "jsr:@noble/hashes@2": "2.0.0",
     "jsr:@std/assert@^1.0.14": "1.0.14",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/internal@^1.0.10": "1.0.10"
   },
   "jsr": {
-    "@noble/ciphers@2.0.0-beta.4": {
-      "integrity": "c9cd49be862e6a8f1e86425741ca718e0f2f9e6e8a6e215b22267642238bf8e4"
+    "@noble/ciphers@2.0.0": {
+      "integrity": "3e320a8edd606522e536d5e7ab821ea487a47cf0c34c36e687b50accb15dc6ce"
     },
-    "@noble/hashes@2.0.0-beta.5": {
-      "integrity": "487620cda0f9059d7aee25fbd5bf35506ad5eac8e8b9251b99bdf7cf1dcd0600"
+    "@noble/hashes@2.0.0": {
+      "integrity": "203b1a1d3a3de1e964e482fbe8196963e12d5dc63f280b42eae2fb74131001c8"
     },
     "@std/assert@1.0.14": {
       "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
@@ -29,8 +29,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@noble/ciphers@^2.0.0-beta.4",
-      "jsr:@noble/hashes@^2.0.0-beta.5",
+      "jsr:@noble/ciphers@2",
+      "jsr:@noble/hashes@2",
       "jsr:@std/assert@^1.0.14",
       "jsr:@std/encoding@^1.0.10"
     ]

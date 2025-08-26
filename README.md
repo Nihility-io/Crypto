@@ -1,18 +1,23 @@
 # Crypto
+
 Nihility.io Crypto is a collection of high level cryptographic functions. This package is mainly intended for my project SecretBin but you may also use it if you find it useful.
 
 ## Encryption and Decryption
+
 Nihility.io Crypto provides high level functions for encrypting and decrypting string messages. When encrypting a string using `encrypt`, it returns a string which looks like an URL. This string contains all the information necessary to decrypt the data again. Said string is called a CryptoURL and has the following format:
- - **crypto://?algorithm=<encryption_algorithm>&key-algorithm=<key_algorithm>&<additional_parameters...>#<encrypted_message>**
-In order to decrypt the CryptoURL, use `decrypt` with the passphrase used to encrypt the message.
+
+- **crypto://?algorithm=<encryption_algorithm>&key-algorithm=<key_algorithm>&<additional_parameters...>#<encrypted_message>**
+  In order to decrypt the CryptoURL, use `decrypt` with the passphrase used to encrypt the message.
 
 ### Supported Algorithms
+
 - AES256-GCM with PBKDF2: This method relies on Web Crypto in the browser for encryption and key derivation.
 - XChaCha20-Poly1305 with Scrypt: This method relies on the @noble/ciphers library, which implements encryption and key derivation using JavaScript.
 
 ### Usage
-``` ts
-import { decrypt, encrypt, EncryptionAlgorithm, config } from "@jsr:@nihility-io/crypto"
+
+```ts
+import { config, decrypt, encrypt, EncryptionAlgorithm } from "@jsr:@nihility-io/crypto"
 
 // You may configure the encryption parameters if you want. These are the defaults:
 config.PBKDF2.saltLength = 16
@@ -42,10 +47,12 @@ const message = "Hello, world!"
 ```
 
 ## Password Generation
+
 Nihility.io Crypto provides cryptographically random password generator.
 
 ### Usage
-``` ts
+
+```ts
 import { generatePassword } from "@jsr:@nihility-io/crypto"
 
 const password = generatePassword({
