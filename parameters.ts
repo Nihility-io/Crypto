@@ -38,7 +38,7 @@ export class CryptoURL {
 	 * Parse the encryption parameters from a crypto URL or create a new instance with the given algorithm and key algorithm.
 	 * @param url Crypto URL to parse
 	 */
-	public constructor(url: string)
+	public constructor(url: string, data?: Uint8Array)
 
 	/**
 	 * Creates a new instance with the given encryption algorithm and key algorithm.
@@ -48,7 +48,7 @@ export class CryptoURL {
 	public constructor(algorithm: EncryptionAlgorithm, keyAlgorithm: KeyAlgorithm)
 	public constructor() {
 		// Check if the constructor was called with two arguments (algorithm and keyAlgorithm)
-		if (arguments.length === 2) {
+		if (arguments.length === 2 && typeof arguments[1] === "string") {
 			this.#data = new Uint8Array(0)
 			this.#params = {}
 			this.algorithm = arguments[0] as EncryptionAlgorithm
@@ -57,13 +57,18 @@ export class CryptoURL {
 		}
 
 		const url = arguments[0] as string
+		const data = arguments[1] as Uint8Array | undefined
 
 		const [rawParamURL, encodedData] = url.split("#")
 		if (!rawParamURL || !encodedData) {
 			throw new InvalidCryptoParametersError(url)
 		}
 
-		this.#data = decodeBase64(encodedData)
+		if (data) {
+			this.#data = data
+		} else {
+			this.#data = decodeBase64(encodedData)
+		}
 
 		let paramURL: URL
 
