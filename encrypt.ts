@@ -19,10 +19,10 @@ import { CryptoURL } from "./parameters.ts"
  */
 export function encrypt(
 	passphrase: string | Uint8Array,
-	message: string,
+	message: string | Uint8Array,
 	algorithm = EncryptionAlgorithm.AES256GCM,
 ): Promise<string> {
-	const data = toBytes(message)
+	const data = typeof message === "string" ? toBytes(message) : message
 	switch (algorithm) {
 		case EncryptionAlgorithm.AES256GCM:
 			return encryptAES256GCM(passphrase, data)

@@ -14,14 +14,32 @@ import {
  * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
  * @returns Decrypted data string
  */
-export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string): Promise<string> {
+export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string, type?: "string"): Promise<string>
+
+/**
+ * Decrypts the encrypted data using the given key and password
+ * @param passphrase Passphrase used to encrypt the data
+ * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
+ * @returns Decrypted data string
+ */
+export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string, type: "binary"): Promise<Uint8Array>
+
+export async function decrypt(
+	passphrase: string | Uint8Array,
+	cryptoURL: string,
+	type?: "string" | "binary",
+): Promise<unknown> {
 	const c = new CryptoURL(cryptoURL)
 
 	switch (c.algorithm) {
-		case EncryptionAlgorithm.AES256GCM:
-			return fromBytes(await decryptAES256GCM(passphrase, c))
-		case EncryptionAlgorithm.XChaCha20Poly1305:
-			return fromBytes(await decryptXChaCha20Poly1305(passphrase, c))
+		case EncryptionAlgorithm.AES256GCM: {
+			const res = await decryptAES256GCM(passphrase, c)
+			return type === "binary" ? res : fromBytes(res)
+		}
+		case EncryptionAlgorithm.XChaCha20Poly1305: {
+			const res = await decryptXChaCha20Poly1305(passphrase, c)
+			return type === "binary" ? res : fromBytes(res)
+		}
 		default:
 			throw new UnsupportedEncryptionAlgorithmError(c.algorithm)
 	}
