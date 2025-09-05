@@ -60,13 +60,13 @@ export class CryptoURL {
 		const data = arguments[1] as Uint8Array | undefined
 
 		const [rawParamURL, encodedData] = url.split("#")
-		if (!rawParamURL || !encodedData) {
-			throw new InvalidCryptoParametersError(url)
-		}
 
 		if (data) {
 			this.#data = data
 		} else {
+			if (!rawParamURL || !encodedData) {
+				throw new InvalidCryptoParametersError(url)
+			}
 			this.#data = decodeBase64(encodedData)
 		}
 
