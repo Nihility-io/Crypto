@@ -20,6 +20,7 @@ export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string
  * Decrypts the encrypted data using the given key and password
  * @param passphrase Passphrase used to encrypt the data
  * @param cryptoURL Encrypted data and encryption parameters in the form of a CryptoURL
+ * @param data Specify data if the encrypted data is not part of the CryptoURL
  * @returns Decrypted data string
  */
 export async function decrypt(passphrase: string | Uint8Array, cryptoURL: string, data: Uint8Array): Promise<Uint8Array>

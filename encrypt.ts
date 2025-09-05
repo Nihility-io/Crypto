@@ -15,7 +15,7 @@ import { CryptoURL } from "./parameters.ts"
  * @param passphrase Passphrase used to encrypt the data
  * @param message Message to encrypt
  * @param algorithm Encryption algorithm (default: AES256-GCM)
- * @returns Encrypted data
+ * @returns CryptoURL containing the encryption parameters and the encrypted data itself
  */
 export function encrypt(
 	passphrase: string | Uint8Array,
@@ -28,7 +28,7 @@ export function encrypt(
  * @param passphrase Passphrase used to encrypt the data
  * @param message Message to encrypt
  * @param algorithm Encryption algorithm (default: AES256-GCM)
- * @returns Encrypted data
+ * @returns CryptoURL containing the encryption parameters and separate encrypted data
  */
 export function encrypt(
 	passphrase: string | Uint8Array,
@@ -41,13 +41,12 @@ export function encrypt(
  * @param passphrase Passphrase used to encrypt the data
  * @param message Message to encrypt
  * @param algorithm Encryption algorithm (default: AES256-GCM)
- * @returns Encrypted data
  */
 export async function encrypt(
 	passphrase: string | Uint8Array,
 	message: string | Uint8Array,
 	algorithm = EncryptionAlgorithm.AES256GCM,
-): Promise<unknown> {
+): Promise<string | [string, Uint8Array]> {
 	const data = typeof message === "string" ? toBytes(message) : message
 
 	let res: CryptoURL
